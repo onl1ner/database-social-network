@@ -1,30 +1,30 @@
 CREATE TABLE users (
-		id INT PRIMARY KEY NOT NULL,
-		nickname VARCHAR(64) NOT NULL,
-		email VARCHAR(255) NOT NULL,
-		avatar_url VARCHAR(512),
-		registration_date DATE NOT NULL
+	id INT PRIMARY KEY NOT NULL,
+	nickname VARCHAR(64) NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	avatar_url VARCHAR(512),
+	registration_date DATE NOT NULL
 );
 
 CREATE TABLE message_attachments (
-		id INT PRIMARY KEY NOT NULL,
-		photo_url VARCHAR(512) NOT NULL
+	id INT PRIMARY KEY NOT NULL,
+	photo_url VARCHAR(512) NOT NULL
 );
 
 CREATE TABLE messages (
-		id INT PRIMARY KEY NOT NULL,
-		sender_id INT REFERENCES users(id) NOT NULL,
-		receiver_id INT REFERENCES users(id) NOT NULL,
-		attachment_id INT REFERENCES message_attachments(id),
-		text TEXT NOT NULL,
-		creation_date DATE NOT NULL
+	id INT PRIMARY KEY NOT NULL,
+	sender_id INT REFERENCES users(id) NOT NULL,
+	receiver_id INT REFERENCES users(id) NOT NULL,
+	attachment_id INT REFERENCES message_attachments(id),
+	text TEXT NOT NULL,
+	creation_date DATE NOT NULL
 );
 
 CREATE TABLE reports (
-		id INT PRIMARY KEY NOT NULL,
-		user_id INT REFERENCES users(id) NOT NULL,
-		note TEXT NOT NULL,
-		creation_date DATE NOT NULL
+	id INT PRIMARY KEY NOT NULL,
+	user_id INT REFERENCES users(id) NOT NULL,
+	note TEXT NOT NULL,
+	creation_date DATE NOT NULL
 );
 
 CREATE TABLE post_photos (
@@ -42,10 +42,10 @@ CREATE TABLE posts (
 );
 
 CREATE TABLE likes (
-		user_id INT REFERENCES users(id),
-		post_id INT REFERENCES posts(id),
+	user_id INT REFERENCES users(id),
+	post_id INT REFERENCES posts(id),
 
-		PRIMARY KEY (user_id, post_id)
+	PRIMARY KEY (user_id, post_id)
 );
 
 CREATE TABLE bots (
@@ -64,9 +64,9 @@ CREATE TABLE groups (
 );
 
 CREATE TABLE comments (
-		id INT PRIMARY KEY NOT NULL,
-		post_id INT REFERENCES posts(id),
-		user_id INT REFERENCES users(id),
-		text TEXT NOT NULL,
-		creation_date DATE NOT NULL
+	id INT PRIMARY KEY NOT NULL,
+	post_id INT REFERENCES posts(id),
+	user_id INT REFERENCES users(id),
+	text TEXT NOT NULL,
+	creation_date DATE NOT NULL
 )
