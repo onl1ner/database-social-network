@@ -27,27 +27,6 @@ CREATE TABLE reports (
 	creation_date DATE NOT NULL
 );
 
-CREATE TABLE post_photos (
-  	id INT PRIMARY KEY NOT NULL,
-  	photo_url VARCHAR(512) NOT NULL
-);
-
-CREATE TABLE posts (
-  	id INT PRIMARY KEY NOT NULL,
-  	owner_id INT REFERENCES users(id) NOT NULL,
-  	photo_id INT REFERENCES post_photos(id),
-  	text TEXT NOT NULL,
-  	title VARCHAR(255) NOT NULL,
-  	creation_date DATE NOT NULL
-);
-
-CREATE TABLE likes (
-	user_id INT REFERENCES users(id),
-	post_id INT REFERENCES posts(id),
-
-	PRIMARY KEY (user_id, post_id)
-);
-
 CREATE TABLE bots (
   	id INT PRIMARY KEY NOT NULL,
   	nickname VARCHAR(255) NOT NULL,
@@ -61,6 +40,41 @@ CREATE TABLE groups (
   	bots_id INT REFERENCES bots(id),
   	name VARCHAR(255) NOT NULL,
   	description TEXT
+);
+
+CREATE TABLE post_photos (
+  	id INT PRIMARY KEY NOT NULL,
+  	photo_url VARCHAR(512) NOT NULL
+);
+
+CREATE TABLE posts (
+  	id INT PRIMARY KEY NOT NULL,
+  	owner_id INT REFERENCES groups(id) NOT NULL,
+  	photo_id INT REFERENCES post_photos(id),
+  	text TEXT NOT NULL,
+  	title VARCHAR(255) NOT NULL,
+  	creation_date DATE NOT NULL
+);
+
+CREATE TABLE likes (
+	user_id INT REFERENCES users(id),
+	post_id INT REFERENCES posts(id),
+
+	PRIMARY KEY (user_id, post_id)
+);
+
+CREATE TABLE users_to_groups (
+	user_id INT REFERENCES users(id),
+	group_id INT REFERENCES groups(id),
+
+	PRIMARY KEY (user_id, group_id)
+);
+
+CREATE TABLE groups_to_bots (
+	group_id INT REFERENCES groups(id),
+	bot_id INT REFERENCES bots(id),
+
+	PRIMARY KEY (group_id, bot_id)
 );
 
 CREATE TABLE comments (
